@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import dj_database_url
 import os
 from pathlib import Path
 import django_heroku
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-+49v22$kh&(-a3=)zw^@nhsqll(e6tzd+st4r@5u50#(coa#e#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost","127.0.0.1",'.herokuapp.com']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", '.herokuapp.com']
 
 
 # Application definition
@@ -39,16 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-     # Local
+    # Local
     'core',
 
     # 3rd party
-    'allauth', # new
-    'allauth.account', # new   
+    'allauth',  # new
+    'allauth.account',  # new
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,7 +64,7 @@ ROOT_URLCONF = 'pizzaDelivary.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates',BASE_DIR / 'templates/allauth'],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'templates/allauth'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +91,6 @@ DATABASES = {
     }
 }
 
-import dj_database_url
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
@@ -137,7 +138,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 # Stripes
 # STRIPE_SECRET_KEY = os.environ.get("STRIPE_LIVE_SECRET_KEY")
 # STRIPE_TEST_SECRET_KEY = os.environ["STRIPE_TEST_SECRET_KEY"]
-# 
+#
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -155,7 +156,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
