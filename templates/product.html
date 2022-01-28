@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+    <div class="pb-3 pt-3">
+        <div class="row container">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <img class="img-fluid" src="{{product.image.url}}" alt="Sample image">
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="title" style="font-family:cursive;color:#363636">
+                    <h3>{{product.name}}</h3>
+                    <h4 class="text-success" style="font-family: cursive;"><sup>$</sup><span id="price">{{product.price}}</span></h4>
+                </div>
+                <p class="text-muted">
+                    {{product.description}}
+                </p>
+                <form method="post" style="font-family: cursive;" action="{% url 'add_to_cart' %}">
+                    {% csrf_token %}
+                <div class="pizza-size">
+                    <h5>Select pizza size</h5>
+                    <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
+                        {% for size in sizes %}
+                        <label class="btn btn-outline-pizza active" id="Label{{forloop.counter}}">
+                            <input type="radio" name="size" id="option{{forloop.counter}}" autocomplete="off" checked value="{{size.id}}">{{size.size}}"
+                        </label>
+                        {% endfor %}
+                        </div>
+                </div>
+                <h5>Quantity</h5>
+                <div class="quantity-block-form mb-2">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-pizza" type="button" id="minus">-</button>
+                        </div>
+                        <input type="number" name="quantity" class="form-control" id="quantity" min="1" value="1">
+                        <div class="input-group-append">
+                            <button class="btn btn-pizza" type="button" id="plus">+</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary-lg btn-pizza" value="Add to cart">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block js %}
+        <script>
+            let prices = [];
+            {% for size in sizes %}
+                prices.push({{size.price}});
+            {% endfor %}
+        $(document).ready(function(){
+            $('#Label1').css({background:'rgb(255, 187, 0)',color:'white'});
+            $("#Label1").click(function(){
+                $('#price').text(prices[0]*$('#quantity').val());
+                $('#Label1').css({background:'rgb(255, 187, 0)',color:'white'});
+                $('#Label1').addClass('active'); 
+                $('#Label2').css({background:'white',color:'rgb(255, 187, 0)'});
+                $('#Label2').removeClass('active'); 
+                $('#Label3').css({background:'white',color:'rgb(255, 187, 0)'});  
+                $('#Label3').removeClass('active'); 
+            });
+            $("#Label2").click(function(){
+                $('#price').text(prices[1]*$('#quantity').val());
+                $('#Label2').css({background:'rgb(255, 187, 0)',color:'white'});
+                $('#Label3').addClass('active');
+                $('#Label1').css({background:'white',color:'rgb(255, 187, 0)'});
+                $('#Label1').removeClass('active'); 
+                $('#Label3').css({background:'white',color:'rgb(255, 187, 0)'});  
+                $('#Label3').removeClass('active'); 
+            });
+            $("#Label3").click(function(){
+                $('#price').text(prices[2]*$('#quantity').val());
+                $('#Label3').addClass('active');
+                $('#Label3').css({background:'rgb(255, 187, 0)',color:'white'});
+                $('#Label2').css({background:'white',color:'rgb(255, 187, 0)'});
+                $('#Label2').removeClass('active');
+                $('#Label1').css({background:'white',color:'rgb(255, 187, 0)'});
+                $('#Label1').removeClass('active');  
+            });
+            $("#plus").click(function(){
+                var quantity = $("#quantity").val();
+                quantity++;
+                $("#quantity").val(quantity);
+                $('#price').text(prices[$('#Label1').hasClass('active')?0:($('#Label2').hasClass('active')?1:2)]*$('#quantity').val());
+            });
+            $("#minus").click(function(){
+                var quantity = $("#quantity").val();
+                if(quantity>1){
+                    quantity--;
+                    $("#quantity").val(quantity);
+                }
+                $('#price').text(prices[$('#Label1').hasClass('active')?0:($('#Label2').hasClass('active')?1:2)]*$('#quantity').val());
+            });
+            $('#quantity').change(function(){
+                if($('#quantity').val()<1){
+                    $('#quantity').val(1);
+                }
+                $('#price').text(prices[$('#Label1').hasClass('active')?0:($('#Label2').hasClass('active')?1:2)]*$('#quantity').val());
+                });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+  {% load static %}
+    {% block head %}
+    <style>
+        .divider:after,
+        .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+        }
+        .h-custom {
+        height: calc(100% - 73px);
+        }
+        @media (max-width: 450px) {
+        .h-custom {
+            height: 100%;
+        }
+        }
+    </style>
+    {% endblock %}
+
+    {% block content %}
+    <section class="vh-100 mt-2 mb-2">
+        <div class="container h-custom">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+              <img src="{% static './images/pizza0.jpg' %}" class="img-fluid"
+                alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+              <form method="post">
+                {% csrf_token %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-error text-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                  <p class="lead fw-normal mb-0 me-3">Sign up with</p>
+                </div>
+                <div class="divider d-flex align-items-center my-4">
+                </div>
+      
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example3">Email address</label>
+                  <input type="email" name="email" id="form3Example3" class="form-control form-control-lg"
+                    placeholder="Enter a valid email address" />
+                    <div class="alert alert-error text-danger">
+                      <strong>{{form.email.errors}}</strong>
+                    </div>
+                </div>
+      
+                <!-- Password input -->
+                <div class="form-outline mb-3">
+                  <label class="form-label" for="form3Example4">Password</label>
+                  <input type="password" name="password1" id="form3Example4" class="form-control form-control-lg"
+                    placeholder="Enter password" />
+                    <div class="alert alert-error text-danger">
+                      <strong>{{form.password1.errors}}</strong>
+                    </div>
+                </div>
+
+                <!-- Password input Again -->
+                <div class="form-outline mb-3">
+                    <label class="form-label" for="form3Example4">Password Again</label>
+                    <input type="password" name="password2" id="form3Example5" class="form-control form-control-lg"
+                      placeholder="Enter password again" />
+                      <div class="alert alert-error text-danger">
+                        <strong>{{form.password2.errors}}</strong>
+                      </div>
+                  </div>
+      
+                <div class="text-center text-lg-start mt-4 pt-2">
+                  <button type="submit" class="btn btn-primary btn-lg" id="submitBtn"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign-Up</button>
+                  <p class="small fw-bold mt-2 pt-1 mb-0">already have an account? <a href="/account/login"
+                      class="link-danger">Login </a> Now</p>
+                </div>
+      
+              </form>
+            </div>
+          </div>
+        </div>
+        
+      </section>
+      {% endblock %}
+
+    {% block js %}
+    <script>
+      //Password must be same and validated other wise submit button will not work
+      $('#form3Example5').on('keyup', function () {
+        if ($('#form3Example4').val() == $('#form3Example5').val()) {
+          $('#form3Example5').css('border-color', 'green');
+          $('#form3Example5').css('border-width', '2px');
+          $('#form3Example5').css('border-style', 'solid');
+          $('#form3Example5').css('border-radius', '5px');
+          $('#form3Example5').css('box-shadow', '0 0 5px green');
+          $('#form3Example5').css('outline', 'none');
+          $('#form3Example5').css('color', 'green');
+          $('#form3Example5').css('font-weight', 'bold');
+          $('#form3Example5').css('font-size', '1.2rem');
+          $('#form3Example5').css('text-decoration', 'none');
+          $('#form3Example5').css('cursor', 'pointer');
+          $('#form3Example5').css('background-color', 'transparent');
+
+          $('#submitBtn').css('background-color', 'green');
+          $('#submitBtn').css('border-color', 'green');
+          $('#submitBtn').css('border-width', '2px');
+          $('#submitBtn').css('border-style', 'solid');
+          $('#submitBtn').css('border-radius', '5px');
+          $('#submitBtn').css('box-shadow', '0 0 5px green');
+          $('#submitBtn').css('outline', 'none');
+          $('#submitBtn').css('color', 'white');
+          $('#submitBtn').css('font-weight', 'bold');
+          $('#submitBtn').css('font-size', '1.2rem');
+          $('#submitBtn').css('text-decoration', 'none');
+          $('#submitBtn').css('cursor', 'pointer');
+          $('#submitBtn').attr('disabled', false);
+        } else {
+          $('#form3Example5').css('border-color', 'red');
+          $('#form3Example5').css('border-width', '2px');
+          $('#form3Example5').css('border-style', 'solid');
+          $('#form3Example5').css('border-radius', '5px');
+          $('#form3Example5').css('box-shadow', '0 0 5px red');
+          $('#form3Example5').css('outline', 'none');
+          $('#form3Example5').css('color', 'red');
+          $('#form3Example5').css('font-weight', 'bold');
+          $('#form3Example5').css('font-size', '1.2rem');
+          $('#form3Example5').css('text-decoration', 'none');
+          $('#form3Example5').css('cursor', 'pointer');
+          $('#form3Example5').css('background-color', 'transparent');
+          $('#submitBtn').css('background-color', 'red');
+          $('#submitBtn').css('border-color', 'red');
+          $('#submitBtn').css('border-width', '2px'); 
+          $('#submitBtn').css('border-style', 'solid');
+          $('#submitBtn').css('border-radius', '5px');
+          $('#submitBtn').css('box-shadow', '0 0 5px red');
+          $('#submitBtn').css('outline', 'none');
+          $('#submitBtn').css('color', 'white');
+          $('#submitBtn').css('font-weight', 'bold');
+          $('#submitBtn').css('font-size', '1.2rem');
+          $('#submitBtn').css('text-decoration', 'none');
+          $('#submitBtn').css('cursor', 'pointer');
+          $('#submitBtn').attr('disabled', true);
+        }
+      });
+    </script>
+    {% endblock %}

@@ -1,0 +1,39 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    {% load static %}
+    <!-- Slider -->
+    <div class="slider">
+        <div id="carouselExampleSlidesOnly" class="carousel slide container" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{% static './images/slider0.png' %}" alt="First slide">
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <!-- Most popular Menu -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-2 mt-2">
+                <h2 class="text-center">Most Popular Menu</h2>
+            </div>
+        </div>
+        <div class="row" style="font-family: cursive;">
+          {% for product in products %}
+            <div class="col-md-4">
+                <div class="card mb-2 bg-light border-0 shadow">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{product.name}}</h5>
+                      <h6>Price start from <sup>$</sup><span class="text-success">{{product.price}}</span> </h6>
+                      <p class="card-text">{{product.description|truncatechars:70}}</p>
+                      <a href="/product/{{product.id}}" class="btn btn-danger btn-lg btn-block">Add to cart</a>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

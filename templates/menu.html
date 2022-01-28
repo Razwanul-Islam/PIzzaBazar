@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Most popular Menu -->
+    <div class="container">
+        <div class="row">
+
+        </div>
+        <form method="get" class="filter-block">
+            {% csrf_token %}
+            <h5 class="mb-2">Filter Option</h5>
+            <div class="row">
+                <div class="price-filter-form">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price-filter-from">Price From</label>
+                                    <input type="number" name="lower-price" class="form-control" id="price-filter-from" placeholder="$">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price-filter-to">Price To</label>
+                                    <input type="number" name="upper-price" class="form-control" id="price-filter-to" placeholder="$">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Filter button -->
+            <input type="submit" class="btn btn-primary btn-pizza mb-3" value="Filter">
+        </form>
+        <div class="row" style="font-family: cursive;">
+            {% for product in products %}
+            <div class="col-md-4">
+                <div class="card mb-2 bg-light border-0 shadow">
+                    <img src="{{product.image.url}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{product.name}}</h5>
+                      <h6>Price start from <sup>$</sup><span class="text-success">{{product.price}}</span> </h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="{% url 'product' pk=product.id %}" class="btn btn-danger btn-lg btn-block">Add to cart</a>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#Label1').css({background:'rgb(255, 187, 0)',color:'white'});
+        $("#Label1").click(function(){
+            $('#Label1').css({background:'rgb(255, 187, 0)',color:'white'});
+            $('#Label2').css({background:'white',color:'rgb(255, 187, 0)'});
+            $('#Label3').css({background:'white',color:'rgb(255, 187, 0)'});  
+        });
+        $("#Label2").click(function(){
+            $('#Label2').css({background:'rgb(255, 187, 0)',color:'white'});
+            $('#Label1').css({background:'white',color:'rgb(255, 187, 0)'});
+            $('#Label3').css({background:'white',color:'rgb(255, 187, 0)'});  
+        });
+        $("#Label3").click(function(){
+            $('#Label3').css({background:'rgb(255, 187, 0)',color:'white'});
+            $('#Label2').css({background:'white',color:'rgb(255, 187, 0)'});
+            $('#Label1').css({background:'white',color:'rgb(255, 187, 0)'});  
+        });
+    });
+</script>
+{% endblock %}

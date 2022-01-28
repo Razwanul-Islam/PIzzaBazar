@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+    
+    {% block content %}
+<div class="orders py-4 bg-light">
+    <div class="container">
+        <div class="filter-by-status-form">
+            <form action="">
+                <h4 class="mb-2">Filter by status</h4>
+                <div class="form-group input-group">
+                    <select name="status" id="status" class="form-control" style="max-width: 300px;">
+                        {% for status in statuses %}
+                        <option value="{{status.0}}">{{status.1}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="input-group-append">
+                    <button type="submit" class="btn btn-pizza">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if orders %}
+        {% for order in orders %}
+        <div class="card my-3 shadow border-0">
+            <div class="card-header">
+            Order time: {{order.created_at}}
+            </div>
+            <div class="card-body">
+                <p class="card-title">
+                    {% for item in order.get_items %}
+                    {{item.product.product.name}} {{item.product.size}}" x {{item.quantity}}<br>
+                    {% endfor %}
+                </p>
+                <p class="mb-1"><span><b>Total</b> : <i>{{ order.total_price }}$</i></span></p>
+                <p class="mb-1"><span><b>Status</b> : <i>{{order.status}}</i></span></p>
+                {% if order.status == 'delivered' %}
+                <div class="d-flex justify-content-end">
+                    <a href="#" class="btn btn-pizza">Order again</a>
+                </div>
+                {% endif %}
+                {% if order.status == 'payment_pending' %}
+                <div class="d-flex justify-content-end">
+                    <a href="/checkout/create/{{order.id}}" class="btn btn-pizza">Complete Payment</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div class="alert alert-info">
+            <h4 class="alert-heading">No orders yet!</h4>
+            <p>You have no orders yet. Please check out our <a href="/menu">menu</a> to order.</p>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

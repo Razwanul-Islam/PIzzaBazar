@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <div class="cart-items">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">Cart Items</h1>
+                    {% if cartItems.exists %}
+                    <div class="cart-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Size</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cartItems %}
+                                <tr>
+                                    <td>
+                                        <img src="{{item.product.product.image.url}}" style="width:110px;height:110px" alt="">
+                                        <p>{{item.product.product.name}}</p>
+                                    </td>
+                                    <td>${{item.product.price}}</td>
+                                    <td>
+                                        {{item.product.size}}"
+                                    </td>
+                                    <td>
+                                        {{item.quantity}}
+                                    </td>
+                                    <td>${{item.subtotal_price}}</td>
+                                    <td>
+                                        <a href="{% url 'delete_cart_item' pk=item.id %}" class="btn btn-danger btn-sm">
+                                            <span class="fa fa-trash"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <!-- total -->
+                                <tr style="border-top:1px dotted gray ;">
+                                    <td colspan="4" class="text-right">
+                                        <h4>Total</h4>
+                                    </td>
+                                    <td>
+                                        <h4>${{total_price}}</h4>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end my-3">
+                            
+                            <a href="{% url 'checkout' %}" class="btn btn-primary-lg btn-pizza">
+                                <span class="fa fa-shopping-cart"></span>
+                                checkout
+                            </a>
+                            
+                        </div>
+
+                    </div>
+                    {% else %}
+                    <div class="my-4">
+                        <h3>No items in cart</h3>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
