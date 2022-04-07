@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core',
 
     # 3rd party
+    'django_dropbox_storage',
     'allauth',  # new
     'allauth.account',  # new
 ]
@@ -162,6 +163,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
