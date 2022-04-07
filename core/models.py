@@ -19,7 +19,7 @@ class Product_size(AutoField):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     size = models.CharField(max_length=255)
     price = models.FloatField()
-    stripe_price_id = models.CharField(max_length=255,null=True)
+    stripe_price_id = models.CharField(max_length=255,null=True,blank=True)
 
     class Meta:
         unique_together = ('product', 'size')
@@ -56,8 +56,8 @@ class Order(AutoField):
     payment_method = models.CharField(max_length=255, null=True)
     status = models.CharField(max_length=255, default='pending', choices=STATUS_CHOICES)
     order_note = models.TextField(null=True,blank=True)
-    stripe_session_id = models.CharField(max_length=255,null=True)
-    stripe_checkout_url = models.CharField(max_length=400,null=True)
+    stripe_session_id = models.CharField(max_length=255,null=True, blank=True)
+    stripe_checkout_url = models.CharField(max_length=400,null=True, blank=True)
     def get_items(self):
         return self.orderitem_set.all()
 
