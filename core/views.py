@@ -170,7 +170,7 @@ class UserOrdersView(LoginRequiredMixin, ListView):
 
 # create check out session view
 stripe.api_key = "sk_test_51H11ZJKQ7aeZAm3dgInJd3YK2MTVuOhr6MXptZJhb26CuZsKjDgGxQldPvnEoL1IQ5VJHZaEgXS3AWSjVr9ls3BF00sFzrUXVo"
-YOUR_DOMAIN = 'http://127.0.0.1:8000'
+YOUR_DOMAIN = 'https://pizzabazar.herokuapp.com/'
 
 
 class CreateCheckoutSessionView(View):

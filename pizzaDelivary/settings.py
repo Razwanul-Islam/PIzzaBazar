@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import dj_database_url
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -189,3 +192,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Activate Django-Heroku.
 import django_heroku
 django_heroku.settings(locals(),staticfiles=False)
+
+AWS_S3_ACCESS_KEY_ID = "AKIASF7IPD57D2STSMS5"
+AWS_S3_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "djangotest0"
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
