@@ -13,13 +13,13 @@ import dj_database_url
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+dotenv_path = BASE_DIR/'.env'
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -193,7 +193,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import django_heroku
 django_heroku.settings(locals(),staticfiles=False)
 
-AWS_S3_ACCESS_KEY_ID = "AKIASF7IPD57D2STSMS5"
-AWS_S3_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "djangotest0"
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+AWS_S3_ACCESS_KEY_ID = os.getenv("AWS_S3_ACCESS_KEY_ID")
+AWS_S3_SECRET_ACCESS_KEY = os.getenv("AWS_S3_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")

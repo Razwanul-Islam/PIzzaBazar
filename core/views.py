@@ -169,8 +169,8 @@ class UserOrdersView(LoginRequiredMixin, ListView):
 
 
 # create check out session view
-stripe.api_key = "sk_test_51H11ZJKQ7aeZAm3dgInJd3YK2MTVuOhr6MXptZJhb26CuZsKjDgGxQldPvnEoL1IQ5VJHZaEgXS3AWSjVr9ls3BF00sFzrUXVo"
-YOUR_DOMAIN = 'https://pizzabazar.herokuapp.com/'
+stripe.api_key = settings.STRIPE_SECRET_KEY
+YOUR_DOMAIN = 'http://localhost:8000/'
 
 
 class CreateCheckoutSessionView(View):
